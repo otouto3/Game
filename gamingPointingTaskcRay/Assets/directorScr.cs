@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 // # TODO
 // マウスからマウスの距離にしないと行けなさそう
+// 的の中心が同じだから
+// missしたときはmouseのpreを更新しない
 
 public class directorScr : MonoBehaviour
 {
@@ -82,17 +84,7 @@ public class directorScr : MonoBehaviour
 
                 // クリックされた GameObject clickedObjectを取得
                 // clickedObject = collision2d.transform.gameObject;
-                // 1回目のみ、開始時のマウスの位置からターゲットへの距離を計算
-                if (sum == 0 || hit == 0)
-                {
-                    //diff_distance = Vector2.Distance(target.transform.position, first_mouse_position);
-                    firstCalCol(col.collider);
-                }
-                else
-                {
-                    //calCol(col.collider);
-                    searchTarget(targetList);
-                }
+                searchTarget(targetList, clickPoint);
 
                 // targetの移動量を計算し、それぞれのtargetを動かす
                 move_target = new Vector2(Random.Range(-7.0f, 7.0f), Random.Range(-4.0f, 4.0f));
@@ -172,128 +164,129 @@ public class directorScr : MonoBehaviour
 
     // targetList内を検索し、target_pointなどを設定する
     // target1から検索する 重なりが上から検索する
-    void searchTarget(List<string> list)
+    void searchTarget(List<string> list, Vector2 mouse_position)
+    // 1回目のみ、開始時のマウスの位置からターゲットへの距離を計算
     {
         if (sum == 0 || hit == 0) pre_mouse_position = first_mouse_position;
         if (list.Contains("Target1"))
         {
-            //diff_distance = Vector2.Distance(target.transform.position, start_positon);
-            diff_distance = Vector2.Distance(pre_mouse_position, start_positon);
-            //start_positon = target.transform.position;
-            pre_mouse_position = start_positon;
+            // diff_distance = Vector2.Distance(pre_mouse_position, mouse_position);
+            // pre_mouse_position = mouse_position;
             target_point = 1;
             Debug.Log("target1です");
         }
         else if (list.Contains("Target2"))
         {
-            diff_distance = Vector2.Distance(target2.transform.position, start_positon);
-            start_positon = target2.transform.position;
+            // diff_distance = Vector2.Distance(target2.transform.position, start_positon);
+            // start_positon = target2.transform.position;
             target_point = 2;
             Debug.Log("target2です");
         }
         else if (list.Contains("Target3"))
         {
-            diff_distance = Vector2.Distance(target3.transform.position, start_positon);
-            start_positon = target3.transform.position;
+            // diff_distance = Vector2.Distance(target3.transform.position, start_positon);
+            // start_positon = target3.transform.position;
             target_point = 3;
             Debug.Log("target3です");
         }
         else if (list.Contains("Target4"))
         {
-            diff_distance = Vector2.Distance(target4.transform.position, start_positon);
-            start_positon = target4.transform.position;
+            // diff_distance = Vector2.Distance(target4.transform.position, start_positon);
+            // start_positon = target4.transform.position;
             target_point = 4;
             Debug.Log("target4です");
         }
         else if (list.Contains("Target5"))
         {
-            diff_distance = Vector2.Distance(target5.transform.position, start_positon);
-            start_positon = target5.transform.position;
+            // diff_distance = Vector2.Distance(target5.transform.position, start_positon);
+            // start_positon = target5.transform.position;
             target_point = 5;
             Debug.Log("target5です");
         }
 
+        diff_distance = Vector2.Distance(pre_mouse_position, mouse_position);
+        pre_mouse_position = mouse_position;
 
 
     }
-    void calCol(Collider2D col)
-    {
+    // void calCol(Collider2D col)
+    // {
 
-        if (col.gameObject.tag == "Target1")
-        {
-            diff_distance = Vector2.Distance(target.transform.position, start_positon);
-            start_positon = target.transform.position;
-            target_point = 1;
-            Debug.Log("target1です");
-        }
-        if (col.gameObject.tag == "Target2")
-        {
-            diff_distance = Vector2.Distance(target2.transform.position, start_positon);
-            start_positon = target2.transform.position;
-            target_point = 2;
-            Debug.Log("target2です");
-        }
-        if (col.gameObject.tag == "Target3")
-        {
-            diff_distance = Vector2.Distance(target3.transform.position, start_positon);
-            start_positon = target3.transform.position;
-            target_point = 3;
-            Debug.Log("target3です");
-        }
-        if (col.gameObject.tag == "Target4")
-        {
-            diff_distance = Vector2.Distance(target4.transform.position, start_positon);
-            start_positon = target4.transform.position;
-            target_point = 4;
-            Debug.Log("target4です");
-        }
-        if (col.gameObject.tag == "Target5")
-        {
-            diff_distance = Vector2.Distance(target5.transform.position, start_positon);
-            start_positon = target5.transform.position;
-            target_point = 5;
-            Debug.Log("target5です");
-        }
-    }
+    //     if (col.gameObject.tag == "Target1")
+    //     {
+    //         diff_distance = Vector2.Distance(target.transform.position, start_positon);
+    //         start_positon = target.transform.position;
+    //         target_point = 1;
+    //         Debug.Log("target1です");
+    //     }
+    //     if (col.gameObject.tag == "Target2")
+    //     {
+    //         diff_distance = Vector2.Distance(target2.transform.position, start_positon);
+    //         start_positon = target2.transform.position;
+    //         target_point = 2;
+    //         Debug.Log("target2です");
+    //     }
+    //     if (col.gameObject.tag == "Target3")
+    //     {
+    //         diff_distance = Vector2.Distance(target3.transform.position, start_positon);
+    //         start_positon = target3.transform.position;
+    //         target_point = 3;
+    //         Debug.Log("target3です");
+    //     }
+    //     if (col.gameObject.tag == "Target4")
+    //     {
+    //         diff_distance = Vector2.Distance(target4.transform.position, start_positon);
+    //         start_positon = target4.transform.position;
+    //         target_point = 4;
+    //         Debug.Log("target4です");
+    //     }
+    //     if (col.gameObject.tag == "Target5")
+    //     {
+    //         diff_distance = Vector2.Distance(target5.transform.position, start_positon);
+    //         start_positon = target5.transform.position;
+    //         target_point = 5;
+    //         Debug.Log("target5です");
+    //     }
+    // }
 
-    void firstCalCol(Collider2D col)
-    {
-        if (col.gameObject.tag == "Target1")
-        {
-            diff_distance = Vector2.Distance(target.transform.position, first_mouse_position);
-            start_positon = target.transform.position;
-            target_point = 1;
-            Debug.Log("target1です");
-        }
-        if (col.gameObject.tag == "Target2")
-        {
-            diff_distance = Vector2.Distance(target2.transform.position, first_mouse_position);
-            start_positon = target2.transform.position;
-            target_point = 2;
-            Debug.Log("target2です");
-        }
-        if (col.gameObject.tag == "Target3")
-        {
-            diff_distance = Vector2.Distance(target3.transform.position, first_mouse_position);
-            start_positon = target3.transform.position;
-            target_point = 3;
-            Debug.Log("target3です");
-        }
-        if (col.gameObject.tag == "Target4")
-        {
-            diff_distance = Vector2.Distance(target4.transform.position, first_mouse_position);
-            start_positon = target4.transform.position;
-            target_point = 4;
-            Debug.Log("target4です");
-        }
-        if (col.gameObject.tag == "Target5")
-        {
-            diff_distance = Vector2.Distance(target5.transform.position, first_mouse_position);
-            start_positon = target5.transform.position;
-            target_point = 5;
-            Debug.Log("target5です");
-        }
-    }
+    // void firstCalCol(Collider2D col)
+    // {
+    //     if (col.gameObject.tag == "Target1")
+    //     {
+    //         diff_distance = Vector2.Distance(target.transform.position, first_mouse_position);
+    //         start_positon = target.transform.position;
+    //         target_point = 1;
+    //         Debug.Log("target1です");
+    //     }
+    //     if (col.gameObject.tag == "Target2")
+    //     {
+    //         diff_distance = Vector2.Distance(target2.transform.position, first_mouse_position);
+    //         start_positon = target2.transform.position;
+    //         target_point = 2;
+    //         Debug.Log("target2です");
+    //     }
+    //     if (col.gameObject.tag == "Target3")
+    //     {
+    //         diff_distance = Vector2.Distance(target3.transform.position, first_mouse_position);
+    //         start_positon = target3.transform.position;
+    //         target_point = 3;
+    //         Debug.Log("target3です");
+    //     }
+    //     if (col.gameObject.tag == "Target4")
+    //     {
+    //         diff_distance = Vector2.Distance(target4.transform.position, first_mouse_position);
+    //         start_positon = target4.transform.position;
+    //         target_point = 4;
+    //         Debug.Log("target4です");
+    //     }
+    //     if (col.gameObject.tag == "Target5")
+    //     {
+    //         diff_distance = Vector2.Distance(target5.transform.position, first_mouse_position);
+    //         start_positon = target5.transform.position;
+    //         target_point = 5;
+    //         Debug.Log("target5です");
+    //     }
+    // }
 
 
 }
