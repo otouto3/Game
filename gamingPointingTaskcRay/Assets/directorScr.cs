@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 // マウスからマウスの距離にしないと行けなさそう
 // 的の中心が同じだから
 // missしたときはmouseのpreを更新しない
+//　入力したマトの中心座標と計算してデバッグする
 
 public class directorScr : MonoBehaviour
 {
@@ -51,7 +52,6 @@ public class directorScr : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape)) Quit();
         if (hit == 30) Quit();
 
-        //　データを集める処理
         if (Input.GetMouseButtonDown(0) && first_click)
         {
             // マウスのポジションを得る
@@ -64,8 +64,6 @@ public class directorScr : MonoBehaviour
             //Rayの長さ
             float maxDistance = 30;
             RaycastHit2D col = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, maxDistance, layerMask);
-
-
             // // SpriteのCollider2dとの接触を検知する
             // // 指定した位置にオブジェクトがあれば、オブジェクトを取り出す
             // // なければnullを返す
@@ -77,8 +75,6 @@ public class directorScr : MonoBehaviour
 
                 foreach (RaycastHit2D hit_target in Physics2D.RaycastAll(clickPoint, Vector2.zero))
                 {
-                    // name or tagなどを配列に格納して、targetが含まれているかみていく
-                    //Debug.Log(hit_target.collider.gameObject.name);
                     targetList.Add(hit_target.collider.gameObject.name);
                 }
 
@@ -115,11 +111,8 @@ public class directorScr : MonoBehaviour
 
             string res = hit.ToString() + "hit" + " " + miss.ToString() + "miss" + " " + diff_time.ToString() + "s";
             msgtxt.GetComponent<Text>().text = res;
-
-            // DateTime now = DateTime.Now;
-            // string data = now.ToLongTimeString() + "," + hit.ToString() + "," + miss.ToString() + "," + diff_time.ToString() + "," + diff_distance.ToString();
-            // WritePointingData(data);
             sum++;
+            Debug.Log(pre_mouse_position);
         }
 
         if (Input.GetMouseButtonDown(0) && !first_click) First();
@@ -154,7 +147,7 @@ public class directorScr : MonoBehaviour
         target3.transform.position = move_target;
         target4.transform.position = move_target;
         target5.transform.position = move_target;
-        start_positon = target.transform.position;
+        //start_positon = target.transform.position;
 
         msgtxt.GetComponent<Text>().text = "START!!!";
         start_time = Time.time;
